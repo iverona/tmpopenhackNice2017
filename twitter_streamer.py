@@ -58,8 +58,8 @@ class MyManager:
                 print "There is image in " + str(image)
 
         new_tweet = "Thanks @"+user+" for the feedback. From lat:" + str(position[0]) +" lon:"+ str(position[1]) +" Generating Public ID:" + str(random.randint(00000, 99999))
-        #self.post_tweet(new_tweet)
-        #self.trigger_new_case(user, text, position[0], position[1], image)
+        self.post_tweet(new_tweet)
+        self.trigger_new_case(user, text, position[0], position[1], image)
 
     def post_tweet(self, tweet):
         if len(tweet) < 140:
