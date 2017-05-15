@@ -50,15 +50,22 @@ class MyManager:
         else:
             position = self.get_position(tweet)
 
+        image = None
+
+        if 'entities' in tweet and 'media' in tweet['entities']:
+            for media_metadata in tweet['entities']['media']:
+                image = media_metadata['media_url_https']
+                print "There is image in " + str(image)
+
         new_tweet = "Thanks @"+user+" for the feedback. From lat:" + str(position[0]) +" lon:"+ str(position[1]) +" Generating Public ID:" + str(random.randint(00000, 99999))
-        self.post_tweet(new_tweet)
-        self.trigger_new_case(user, text, position[0], position[1])
+        #self.post_tweet(new_tweet)
+        #self.trigger_new_case(user, text, position[0], position[1], image)
 
     def post_tweet(self, tweet):
         if len(tweet) < 140:
             self.api.update_status(status=tweet)
 
-    def trigger_new_case(self, user, text, lat, lon):
+    def trigger_new_case(self, user, text, lat, lon, image):
         create_sf_ticket(user, text, lat, lon)
 
     def checking_possible_spam(self):

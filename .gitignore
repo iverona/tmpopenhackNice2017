@@ -1,0 +1,5 @@
+# Pyc files
+*.pyc
+
+# Json files
+*.json
