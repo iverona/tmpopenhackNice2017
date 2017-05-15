@@ -1,4 +1,5 @@
-import json, re, random
+import json
+import random
 from tweepy.streaming import StreamListener
 from sfCreateTicket import create_sf_ticket
 
@@ -14,9 +15,9 @@ class MyListener(StreamListener):
             with open(self.file_name, 'a') as f:
                 f.write(data)
                 tweet = json.loads(data.decode('utf-8'))
-                print("Received new tweet", tweet)
+                print("Received new tweet", tweet['text'], tweet['user'])
                 self.manager.analyse_new_tweet(tweet)
-                print("Analized new tweet", tweet)
+                print("Analyzed new tweet")
                 return True
         except BaseException as e:
             print("Error on_data: " % str(e))
@@ -41,12 +42,14 @@ class MyManager:
         text = tweet['text']
         user = tweet['user']['screen_name']
 
-        # if tweet['geo'] is None or tweet['geo']['coordinates'] is None:
-        #     new_tweet = "Thanks @" + user + ", please add position and image for investigating the issue. ID:" + str(random.randint(00000, 99999))
-        #     self.post_tweet(new_tweet)
-        #
-        # else:
-        position = [18, 15]#self.getPosition(tweet)
+        if tweet['geo'] is None or tweet['geo']['coordinates'] is None:
+            position = [18, 15]
+        #    new_tweet = "Thanks @" + user + ", please add position and image for investigating the issue. ID:" + str(random.randint(00000, 99999))
+        #    self.post_tweet(new_tweet)
+
+        else:
+            position = self.get_position(tweet)
+
         new_tweet = "Thanks @"+user+" for the feedback. From lat:" + str(position[0]) +" lon:"+ str(position[1]) +" Generating Public ID:" + str(random.randint(00000, 99999))
         self.post_tweet(new_tweet)
         self.trigger_new_case(user, text, position[0], position[1])
@@ -61,7 +64,7 @@ class MyManager:
     def checking_possible_spam(self):
         pass
 
-    def getPosition(self, tweet):
+    def get_position(self, tweet):
         if tweet['geo'] is not None:
             return tweet['geo']['coordinates']
         else:

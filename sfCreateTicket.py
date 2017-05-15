@@ -27,4 +27,5 @@ def create_sf_ticket(handle, text, lat, lon):
 
 	response = requests.post(url, data=json.dumps(jPayload), headers=headers)
 
-create_sf_ticket("iveronar", "test report from twitter!", "1.23", "3.21")
+# Example
+# create_sf_ticket("iveronar", "test report from twitter!", "1.23", "3.21")
