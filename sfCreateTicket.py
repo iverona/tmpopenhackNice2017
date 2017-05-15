@@ -17,16 +17,7 @@ headers = {
 def create_sf_ticket(handle, text, lat, lon):
 	jPayload = {
 		 "subStatus": "Pending",
-		  "status": "Submitted",
-		  # "targetResolutionDate": "2017-05-31T10:19:00.000Z",
-		  # "creationDate": "2017-05-11T13:05:09.000Z",
-		  # "type": "Question",
-		  # "severity": "Medium",
-		  #"description": "Description string Postman Test2",
-		  # "statusChangeDate": "2017-05-11T10:19:00.000Z",
-		  # "correlationId": "123",
-		  # "statusChangeReason": "Reason string",
-		  # "resolutionDate": "2017-05-14T13:05:09.000Z",
+		  "status": "Submitted",		  
 		  "twitterHandle": "%s" % handle,
 		  "subject": "%s" % text,
 		  "location_long": "%s" % lon,
